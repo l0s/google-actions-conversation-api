@@ -1,5 +1,6 @@
 package com.macasaet.google.conversation;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -8,8 +9,8 @@ public class Input {
 
     private String intent;
     @XmlElement(name="raw_inputs")
-    private List<RawInput> rawInputs;
-    private List<Argument> arguments;
+    private List<RawInput> rawInputs = new LinkedList<>();
+    private List<Argument> arguments = new LinkedList<>();
     
     public String getIntent() {
         return intent;

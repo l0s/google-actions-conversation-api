@@ -38,32 +38,26 @@ public class RawInput {
         VOICE
     }
 
-    
     public CreateTime getCreateTime() {
         return createTime;
     }
 
-    
     public void setCreateTime(CreateTime createTime) {
         this.createTime = createTime;
     }
 
-    
     public InputType getInputType() {
         return inputType;
     }
 
-    
     public void setInputType(InputType inputType) {
         this.inputType = inputType;
     }
 
-    
     public String getQuery() {
         return query;
     }
 
-    
     public void setQuery(String query) {
         this.query = query;
     }

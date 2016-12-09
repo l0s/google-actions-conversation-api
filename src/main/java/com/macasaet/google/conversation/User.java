@@ -16,27 +16,27 @@ public class User {
     private UserProfile profile;
     @XmlAttribute(name="access_token")
     private String accessToken;
-    
+
     public String getUserId() {
         return userId;
     }
-    
+
     public void setUserId(final String userId) {
         this.userId = userId;
     }
-    
+
     public UserProfile getProfile() {
         return profile;
     }
-    
+
     public void setProfile(final UserProfile profile) {
         this.profile = profile;
     }
-    
+
     public String getAccessToken() {
         return accessToken;
     }
-    
+
     public void setAccessToken(final String accessToken) {
         this.accessToken = accessToken;
     }

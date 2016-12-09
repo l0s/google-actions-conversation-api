@@ -1,13 +1,21 @@
 package com.macasaet.google.conversation;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 public class ConversationRequest {
 
     private User user;
     private Device device;
     private Conversation conversation;
-    private List<Input> inputs;
+    private List<Input> inputs = new LinkedList<>();
+
+    @XmlTransient
+    public String getConversationToken() {
+        return getConversation().getConversationToken();
+    }
 
     public User getUser() {
         return user;
