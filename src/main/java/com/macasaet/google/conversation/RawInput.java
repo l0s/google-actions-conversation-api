@@ -8,7 +8,7 @@ public class RawInput {
     @XmlElement(name="create_time")
     private CreateTime createTime;
     @XmlAttribute(name="input_type")
-    private InputType inputType;
+    private Integer inputType;
     private String query;
 
     public static class CreateTime {
@@ -46,11 +46,11 @@ public class RawInput {
         this.createTime = createTime;
     }
 
-    public InputType getInputType() {
+    public Integer getInputType() {
         return inputType;
     }
 
-    public void setInputType(InputType inputType) {
+    public void setInputType(Integer inputType) {
         this.inputType = inputType;
     }
 

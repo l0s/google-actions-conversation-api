@@ -41,4 +41,8 @@ public class User {
         this.accessToken = accessToken;
     }
 
+    public String toString() {
+        return "User [userId=" + getUserId() + ", profile=" + getProfile() + "]";
+    }
+
 }

@@ -6,7 +6,7 @@ public class Conversation {
 
     @XmlAttribute(name="conversation_id")
     private String conversationId;
-    private ConversationType type;
+    private Integer type;
     @XmlAttribute(name="conversation_token")
     private String conversationToken;
 
@@ -18,11 +18,11 @@ public class Conversation {
         this.conversationId = conversationId;
     }
 
-    public ConversationType getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(ConversationType type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -33,5 +33,9 @@ public class Conversation {
     public void setConversationToken(String conversationToken) {
         this.conversationToken = conversationToken;
     }
-    
+
+    public String toString() {
+        return "Conversation [conversationToken=" + getConversationToken() + ", type=" + getType() + "]";
+    }
+
 }

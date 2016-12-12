@@ -15,7 +15,7 @@ public class ConversationResponse {
     @XmlElement(name="expected_inputs")
     private List<ExpectedInput> expectedInputs = new LinkedList<>();
     @XmlElement(name="final_response")
-    private SpeechResponse finalResponse;
+    private FinalResponse finalResponse;
 
     public String getConversationToken() {
         return conversationToken;
@@ -41,12 +41,17 @@ public class ConversationResponse {
         this.expectedInputs = expectedInputs;
     }
 
-    public SpeechResponse getFinalResponse() {
+    public FinalResponse getFinalResponse() {
         return finalResponse;
     }
 
-    public void setFinalResponse(SpeechResponse finalResponse) {
+    public void setFinalResponse(FinalResponse finalResponse) {
         this.finalResponse = finalResponse;
+    }
+
+    public String toString() {
+        return "ConversationResponse [conversationToken=" + getConversationToken() + ", expectUserResponse="
+                + isExpectUserResponse() + ", finalResponse=" + getFinalResponse() + "]";
     }
 
 }

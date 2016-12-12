@@ -14,7 +14,8 @@ public class ConversationRequest {
 
     @XmlTransient
     public String getConversationToken() {
-        return getConversation().getConversationToken();
+        final Conversation convo = getConversation();
+        return convo != null ? convo.getConversationToken() : null;
     }
 
     public User getUser() {
@@ -47,6 +48,11 @@ public class ConversationRequest {
     
     public void setInputs(List<Input> inputs) {
         this.inputs = inputs;
+    }
+
+    @Override
+    public String toString() {
+        return "ConversationRequest [user=" + getUser() + ", conversation=" + getConversation() + "]";
     }
 
 }

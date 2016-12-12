@@ -38,7 +38,7 @@ public class ConversationRequestTest {
             "  },\n" + 
             "  \"conversation\": {\n" + 
             "    \"conversation_id\": \"1732fdd4-4036-49d8-9a35-e47d57e2307e\",\n" + 
-            "    \"type\": \"ACTIVE\",\n" + 
+            "    \"type\": 1,\n" + 
             "    \"conversation_token\": \"d8041d12-4e0c-4286-902d-05f068d5d738\"\n" + 
             "  },\n" + 
             "  \"inputs\": [\n" + 
@@ -83,6 +83,7 @@ public class ConversationRequestTest {
         
         assertEquals( "003ed57d-b2a6-46a8-8e29-19fa2aa7f553", result.getUser().getUserId() );
         assertEquals( "1732fdd4-4036-49d8-9a35-e47d57e2307e", result.getConversation().getConversationId() );
+        assertEquals( "d8041d12-4e0c-4286-902d-05f068d5d738", result.getConversationToken() );
     }
 
 }

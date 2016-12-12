@@ -35,4 +35,8 @@ public class UserProfile {
         this.displayName = displayName;
     }
 
+    public String toString() {
+        return "UserProfile [displayName=" + getDisplayName() + "]";
+    }
+
 }
