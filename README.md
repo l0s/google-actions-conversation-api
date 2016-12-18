@@ -2,6 +2,8 @@
 
 Java POJOs / DTOs / domain objects  for the Actions on Google Conversation API: https://developers.google.com/actions/reference/conversation
 
+[![Build Status](https://travis-ci.org/l0s/google-actions-conversation-api.svg?branch=master)](https://travis-ci.org/l0s/google-actions-conversation-api)
+
 ## Example Usage
 
 These objects can be used with Jersey like so:
@@ -29,3 +31,10 @@ These objects can be used with Jersey like so:
 Ensure that your JSON library is configured to:
 * not fail if it encounters unknown properties (during deserialisation of JSON to POJO)
 * exclude fields that are `null` or empty (during serialisation of POJO to JSON)
+
+## Uploading to Maven Central
+
+    mvn --batch-mode release:prepare
+    mvn release:perform
+
+Then, commit and push changes.
