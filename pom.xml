@@ -17,8 +17,8 @@
   </licenses>
   <scm>
     <url>https://github.com/l0s/google-actions-conversation-api</url>
-    <connection>git@github.com:l0s/google-actions-conversation-api.git</connection>
-    <developerConnection>git@github.com:l0s/google-actions-conversation-api.git</developerConnection>
+    <connection>scm:git:ssh://github.com:l0s/google-actions-conversation-api.git</connection>
+    <developerConnection>scm:git:ssh://github.com:l0s/google-actions-conversation-api.git</developerConnection>
   </scm>
   <developers>
     <developer>
