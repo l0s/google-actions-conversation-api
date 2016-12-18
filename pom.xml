@@ -3,7 +3,7 @@
   <groupId>com.macasaet.google.conversation</groupId>
   <artifactId>google-actions-conversation-api</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.8</version>
+  <version>0.0.9-SNAPSHOT</version>
   <name>google-actions-conversation-api</name>
   <url>https://github.com/l0s/google-actions-conversation-api</url>
   <description>Java domain objects for the Actions on Google Conversation API</description>
@@ -18,7 +18,7 @@
     <url>https://github.com/l0s/google-actions-conversation-api</url>
     <connection>scm:git:ssh://github.com/l0s/google-actions-conversation-api.git</connection>
     <developerConnection>scm:git:git@github.com:l0s/google-actions-conversation-api.git</developerConnection>
-    <tag>google-actions-conversation-api-0.0.8</tag>
+    <tag>HEAD</tag>
   </scm>
   <developers>
     <developer>
