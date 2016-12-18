@@ -17,7 +17,6 @@
   <scm>
     <url>https://github.com/l0s/google-actions-conversation-api</url>
     <connection>scm:git:ssh://github.com/l0s/google-actions-conversation-api.git</connection>
-    <!-- developerConnection>scm:git:ssh://github.com/l0s/google-actions-conversation-api.git</developerConnection -->
     <developerConnection>scm:git:git@github.com:l0s/google-actions-conversation-api.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
