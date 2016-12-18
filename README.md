@@ -4,6 +4,16 @@ Java POJOs / DTOs / domain objects  for the Actions on Google Conversation API: 
 
 [![Build Status](https://travis-ci.org/l0s/google-actions-conversation-api.svg?branch=master)](https://travis-ci.org/l0s/google-actions-conversation-api)
 
+## Including this in your project
+
+Maven:
+
+    <dependency>
+      <groupId>com.macasaet.google.conversation</groupId>
+      <artifactId>google-actions-conversation-api</artifactId>
+      <version>0.0.8</version>
+    </dependency>
+
 ## Example Usage
 
 These objects can be used with Jersey like so:
@@ -34,7 +44,6 @@ Ensure that your JSON library is configured to:
 
 ## Uploading to Maven Central
 
-    mvn --batch-mode release:prepare
-    mvn release:perform
+    mvn --batch-mode -Prelease clean release:clean release:prepare release:perform
 
 Then, commit and push changes.
