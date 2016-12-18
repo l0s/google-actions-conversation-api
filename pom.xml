@@ -3,7 +3,7 @@
   <groupId>com.macasaet.google.conversation</groupId>
   <artifactId>google-actions-conversation-api</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.6-SNAPSHOT</version>
   <name>google-actions-conversation-api</name>
   <url>https://github.com/l0s/google-actions-conversation-api</url>
   <description>Java domain objects for the Actions on Google Conversation API</description>
@@ -65,6 +65,17 @@
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <goals>deploy</goals>
         </configuration>
       </plugin>
     </plugins>
