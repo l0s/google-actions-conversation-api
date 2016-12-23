@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * This is the request from the Assistant Platform for the agent to process.
+ * This is the request from the Assistant Platform for the agent (action endpoint) to process.
  *
  * <p>Copyright &copy; 2016 Carlos Macasaet.</p>
  *
