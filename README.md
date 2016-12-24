@@ -6,12 +6,14 @@ Java POJOs / DTOs / domain objects  for the Actions on Google Conversation API: 
 
 ## Including this in your project
 
-Maven:
+The artifact is available in [Maven Central](https://repo1.maven.org/maven2/com/macasaet/google/conversation/google-actions-conversation-api/).
+
+Example:
 
     <dependency>
       <groupId>com.macasaet.google.conversation</groupId>
       <artifactId>google-actions-conversation-api</artifactId>
-      <version>0.0.8</version>
+      <version>0.0.10</version>
     </dependency>
 
 ## Example Usage
