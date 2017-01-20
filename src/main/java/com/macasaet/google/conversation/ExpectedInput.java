@@ -21,7 +21,15 @@ public class ExpectedInput {
     @XmlElement(name="input_prompt")
     private InputPrompt inputPrompt;
     @XmlElement(name="possible_intents")
-    private List<ExpectedInput> possibleIntents;
+    private List<ExpectedIntent> possibleIntents;
+
+    public ExpectedInput() {
+    }
+
+    public ExpectedInput(final InputPrompt inputPrompt, final List<ExpectedIntent> possibleIntents) {
+        setInputPrompt(inputPrompt);
+        setPossibleIntents(possibleIntents);
+    }
 
     /**
      * The customized prompt that asks the user for input.
@@ -35,7 +43,7 @@ public class ExpectedInput {
     /**
      * @param inputPrompt The customized prompt that asks the user for input.
      */
-    public void setInputPrompt(InputPrompt inputPrompt) {
+    public void setInputPrompt(final InputPrompt inputPrompt) {
         this.inputPrompt = inputPrompt;
     }
 
@@ -44,14 +52,14 @@ public class ExpectedInput {
      *
      * @return intents that can be used to fulfill the input
      */
-    public List<ExpectedInput> getPossibleIntents() {
+    public List<ExpectedIntent> getPossibleIntents() {
         return possibleIntents;
     }
 
     /**
      * @param possibleIntents intents that can be used to fulfill the input
      */
-    public void setPossibleIntents(List<ExpectedInput> possibleIntents) {
+    public void setPossibleIntents(final List<ExpectedIntent> possibleIntents) {
         this.possibleIntents = possibleIntents;
     }
 

@@ -1,5 +1,6 @@
 package com.macasaet.google.conversation;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -77,6 +78,14 @@ public class ConversationRequest {
 
     public void setInputs(List<Input> inputs) {
         this.inputs = inputs;
+    }
+
+    /**
+     * @return the first input or null if there are no inputs.
+     */
+    public Input getInput() {
+        final Iterator<Input> iterator = getInputs().iterator();
+        return iterator.hasNext() ? iterator.next() : null;
     }
 
     public String toString() {

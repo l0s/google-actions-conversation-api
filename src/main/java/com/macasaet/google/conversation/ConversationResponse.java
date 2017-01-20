@@ -82,6 +82,7 @@ public class ConversationResponse {
      */
     public void setExpectedInput(final ExpectedInput expectedInput) {
         setExpectedInputs(singletonList(expectedInput));
+        setExpectUserResponse(true);
     }
 
     /**

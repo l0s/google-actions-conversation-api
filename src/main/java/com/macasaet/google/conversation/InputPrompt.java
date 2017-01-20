@@ -23,6 +23,18 @@ public class InputPrompt {
     @XmlElement(name="no_input_prompts")
     private List<SpeechResponse> noInputPrompts = new LinkedList<>();
 
+    public InputPrompt() {
+    }
+
+    public InputPrompt(final List<SpeechResponse> initialPrompts, final List<SpeechResponse> noInputPrompts) {
+        setInitialPrompts(initialPrompts);
+        setNoInputPrompts(initialPrompts);
+    }
+
+    public InputPrompt(final List<SpeechResponse> prompts) {
+        this(prompts, prompts);
+    }
+
     /**
      * A single prompt that asks the user to provide an input.
      *

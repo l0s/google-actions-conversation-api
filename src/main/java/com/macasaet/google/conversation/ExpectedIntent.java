@@ -16,6 +16,13 @@ public class ExpectedIntent {
     @XmlElement(name="input_value_spec")
     private InputValueSpec inputValueSpec;
 
+    public ExpectedIntent() {
+    }
+
+    public ExpectedIntent(final String intentId) {
+        setIntent(intentId);
+    }
+
     /**
      * @return The ID of the assistant-provided intent.
      */

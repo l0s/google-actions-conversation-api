@@ -64,4 +64,13 @@ public class Input {
         this.arguments = arguments;
     }
 
+    public Argument getArgument(final String argumentName) {
+        for (final Argument candidate : getArguments()) {
+            if (candidate.getName().equalsIgnoreCase(argumentName)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
 }
