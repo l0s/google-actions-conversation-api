@@ -1,5 +1,7 @@
 package com.macasaet.google.conversation;
 
+import static java.util.Collections.singletonList;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * The customized prompt that asks the user for input.
  *
- * <p>Copyright &copy; 2016 Carlos Macasaet.</p>
+ * <p>Copyright &copy; 2017 Carlos Macasaet.</p>
  *
  * @see <a href=
  *      "https://developers.google.com/actions/reference/conversation#InputPrompt">
@@ -31,8 +33,28 @@ public class InputPrompt {
         setNoInputPrompts(initialPrompts);
     }
 
+    /**
+     * Convenience constructor that reuses the initial prompts for the no-input
+     * prompts.
+     *
+     * @param prompts
+     *            the prompts to say immediately to the user and also to say
+     *            when the user does not respond
+     */
     public InputPrompt(final List<SpeechResponse> prompts) {
         this(prompts, prompts);
+    }
+
+    /**
+     * Convenience constructor to specify a single prompt to be used immediately
+     * as well as repeated should the user not respond.
+     *
+     * @param prompt
+     *            the prompt to say immediately to the user and also to say when
+     *            the user does not respond
+     */
+    public InputPrompt(final SpeechResponse prompt) {
+        this(singletonList(prompt));
     }
 
     /**

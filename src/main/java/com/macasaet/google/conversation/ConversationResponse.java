@@ -2,16 +2,18 @@ package com.macasaet.google.conversation;
 
 import static java.util.Collections.singletonList;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * A response sent from an action agent (endpoint) to the Assistant Platform.
  *
- * <p>Copyright &copy; 2016 Carlos Macasaet.</p>
+ * <p>Copyright &copy; 2017 Carlos Macasaet.</p>
  *
  * @see <a href="https://developers.google.com/actions/reference/conversation#http-response">https://developers.google.com/actions/reference/conversation#http-response</a>
  * @author Carlos Macasaet
@@ -75,6 +77,18 @@ public class ConversationResponse {
 
     protected void setExpectedInputs(List<ExpectedInput> expectedInputs) {
         this.expectedInputs = expectedInputs;
+    }
+
+    /**
+     * @return the only expected input if one is expected, otherwise null.
+     */
+    @XmlTransient
+    public ExpectedInput getExpectedInput() {
+        final Iterator<ExpectedInput> iterator = getExpectedInputs().iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        }
+        return null;
     }
 
     /**
