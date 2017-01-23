@@ -1,7 +1,9 @@
 package com.macasaet.google.conversation;
 
 import static java.util.Collections.singletonList;
+import static java.util.Collections.unmodifiableList;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -129,6 +131,162 @@ public class ConversationResponse {
         final FinalResponse wrapper = new FinalResponse();
         wrapper.setSpeechResponse(speechResponse);
         setFinalResponse(wrapper);
+    }
+
+    public static abstract class Builder {
+
+        private String conversationToken;
+
+        public ConversationResponse build() {
+            final ConversationResponse retval = createResponse();
+            retval.setConversationToken(getConversationToken());
+            return retval;
+        }
+
+        protected abstract ConversationResponse createResponse();
+
+        protected String getConversationToken() {
+            return conversationToken;
+        }
+
+        protected void setConversationToken(String conversationToken) {
+            this.conversationToken = conversationToken;
+        }
+
+    }
+
+    public static class TellResponseBuilder extends Builder {
+
+        private String textToSpeech = null;
+        private String ssml = null;
+
+        public TellResponseBuilder withTextToSpeech(final String textToSpeech) {
+            setTextToSpeech(textToSpeech);
+            setSsml(null);
+            return this;
+        }
+
+        public TellResponseBuilder withSsml(final String ssml) {
+            setSsml(ssml);
+            setTextToSpeech(null);
+            return this;
+        }
+
+        protected ConversationResponse createResponse() {
+            final ConversationResponse retval = new ConversationResponse();
+            retval.setExpectUserResponse(false);
+            return retval;
+        }
+
+        protected String getTextToSpeech() {
+            return textToSpeech;
+        }
+
+        protected void setTextToSpeech(final String textToSpeech) {
+            this.textToSpeech = textToSpeech;
+        }
+
+        protected String getSsml() {
+            return ssml;
+        }
+
+        protected void setSsml(final String ssml) {
+            this.ssml = ssml;
+        }
+
+    }
+
+    public static class AskResponseBuilder extends Builder {
+
+        private final List<SpeechResponse> initialPrompts = new LinkedList<>();
+        private final List<SpeechResponse> noInputPrompts = new LinkedList<>();
+        private final List<String> expectedIntentIds = new LinkedList<>();
+
+        public AskResponseBuilder withPrompt(final SpeechResponse prompt) {
+            return withInitialPrompt(prompt).withNoInputPrompt(prompt);
+        }
+
+        public AskResponseBuilder withTextToSpeechPrompt(final String textToSpeech) {
+            return withInitialTextToSpeech(textToSpeech).withNoInputTextToSpeech(textToSpeech);
+        }
+
+        public AskResponseBuilder withSsmlPrompt(final String ssml) {
+            return withInitialSsml(ssml).withNoInputSsml(ssml);
+        }
+
+        public AskResponseBuilder withInitialPrompt(final SpeechResponse prompt) {
+            getInitialPrompts().add(prompt);
+            return this;
+        }
+
+        public AskResponseBuilder withInitialTextToSpeech(final String textToSpeech) {
+            final SpeechResponse initialPrompt = new SpeechResponse();
+            initialPrompt.setTextToSpeech(textToSpeech);
+            return withInitialPrompt(initialPrompt);
+        }
+
+        public AskResponseBuilder withInitialSsml(final String ssml) {
+            final SpeechResponse initialPrompt = new SpeechResponse();
+            initialPrompt.setSsml(ssml);
+            return withInitialPrompt(initialPrompt);
+        }
+
+        public AskResponseBuilder withNoInputPrompt(final SpeechResponse prompt) {
+            getNoInputPrompts().add(prompt);
+            return this;
+        }
+
+        public AskResponseBuilder withNoInputTextToSpeech(final String textToSpeech) {
+            final SpeechResponse noInputPrompt = new SpeechResponse();
+            noInputPrompt.setTextToSpeech(textToSpeech);
+            return withNoInputPrompt(noInputPrompt);
+        }
+
+        public AskResponseBuilder withNoInputSsml(final String ssml) {
+            final SpeechResponse noInputPrompt = new SpeechResponse();
+            noInputPrompt.setSsml(ssml);
+            return withNoInputPrompt(noInputPrompt);
+        }
+
+        public AskResponseBuilder withExpectedIntentId(final String expectedIntentId) {
+            getExpectedIntentIds().add(expectedIntentId);
+            return this;
+        }
+
+        protected ConversationResponse createResponse() {
+            final InputPrompt inputPrompt =
+                    new InputPrompt(unmodifiableList(getInitialPrompts()), unmodifiableList(getNoInputPrompts()));
+            final List<ExpectedIntent> possibleIntents = new ArrayList<>(getExpectedIntentIds().size());
+            for (final String expectedIntentId : getExpectedIntentIds()) {
+                possibleIntents.add(new ExpectedIntent(expectedIntentId));
+            }
+
+            final ConversationResponse retval = new ConversationResponse();
+            retval.setExpectUserResponse(true);
+            retval.setExpectedInput(new ExpectedInput(inputPrompt, unmodifiableList(possibleIntents)));
+            return retval;
+        }
+
+        protected List<SpeechResponse> getInitialPrompts() {
+            return initialPrompts;
+        }
+
+        protected List<SpeechResponse> getNoInputPrompts() {
+            return noInputPrompts;
+        }
+
+        protected List<String> getExpectedIntentIds() {
+            return expectedIntentIds;
+        }
+
+    }
+
+    public static TellResponseBuilder tell() {
+        return new TellResponseBuilder();
+    }
+
+    public static AskResponseBuilder ask() {
+        return new AskResponseBuilder();
     }
 
     public String toString() {
