@@ -3,9 +3,9 @@ package com.macasaet.google.conversation;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * An intent that can be used to fulfill a given input.
+ * An intent that can be used to fulfil a given input.
  *
- * <p>Copyright &copy; 2016 Carlos Macasaet.</p>
+ * <p>Copyright &copy; 2017 Carlos Macasaet.</p>
  *
  * @see <a href="https://developers.google.com/actions/reference/conversation#ExpectedIntent">https://developers.google.com/actions/reference/conversation#ExpectedIntent</a>
  * @author Carlos Macasaet
@@ -19,8 +19,29 @@ public class ExpectedIntent {
     public ExpectedIntent() {
     }
 
+    /**
+     * @param intentId the Assistant-provided intent
+     */
     public ExpectedIntent(final String intentId) {
         setIntent(intentId);
+    }
+
+    /**
+     * @param intentId the Assistant-provided intent
+     * @param inputValueSpec description of the permissions required to fulfil the intent
+     */
+    public ExpectedIntent(final String intentId, final InputValueSpec inputValueSpec) {
+        this(intentId);
+        setInputValueSpec(inputValueSpec);
+    }
+
+    /**
+     * @param intentId the Assistant-provided intent
+     * @param optContext explanation of why permission is needed
+     * @param permissions the permissions that are needed to fulfil the intent
+     */
+    public ExpectedIntent(final String intentId, final String optContext, final String... permissions) {
+        this(intentId, new InputValueSpec(optContext, permissions));
     }
 
     /**

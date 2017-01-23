@@ -30,7 +30,7 @@ public class InputPrompt {
 
     public InputPrompt(final List<SpeechResponse> initialPrompts, final List<SpeechResponse> noInputPrompts) {
         setInitialPrompts(initialPrompts);
-        setNoInputPrompts(initialPrompts);
+        setNoInputPrompts(noInputPrompts);
     }
 
     /**

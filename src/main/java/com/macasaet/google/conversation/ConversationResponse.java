@@ -3,7 +3,6 @@ package com.macasaet.google.conversation;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,17 +132,47 @@ public class ConversationResponse {
         setFinalResponse(wrapper);
     }
 
+    /**
+     * Convenience object to simplify the creation of standard
+     * {@link ConversationResponse ConversationResponses}. Use one of the
+     * concrete-implementations to avoid creating invalid
+     * {@link ConversationResponse} objects.
+     *
+     * <p>Copyright &copy; Carlos Macasaet.</p>
+     *
+     * @see TellResponseBuilder
+     * @see AskResponseBuilder
+     * @author Carlos Macasaet
+     */
     public static abstract class Builder {
 
         private String conversationToken;
 
+        /**
+         * @return a valid {@link ConversationResponse}
+         */
         public ConversationResponse build() {
             final ConversationResponse retval = createResponse();
             retval.setConversationToken(getConversationToken());
             return retval;
         }
 
+        /**
+         * Instantiate a new {@link ConversationResponse}.
+         *
+         * @return an instance with all of the properties set by the implementor.
+         */
         protected abstract ConversationResponse createResponse();
+
+        /**
+         * Specify a conversation token. If invoked multiple times, each
+         * subsequent invocation will overwrite the previous value.
+         * 
+         * @param conversationToken
+         *            the new conversation token for Assistant to circulate back
+         * @return a builder with this conversation token set.
+         */
+        public abstract Builder withConversationToken(final String conversationToken);
 
         protected String getConversationToken() {
             return conversationToken;
@@ -155,25 +184,55 @@ public class ConversationResponse {
 
     }
 
+    /**
+     * {@link Builder} to generate a valid response that expects no further interaction from the end user.
+     *
+     * <p>Copyright &copy; 2017 Carlos Macasaet.</p>
+     *
+     * @see ConversationResponse#tell()
+     * @author Carlos Macasaet
+     */
     public static class TellResponseBuilder extends Builder {
 
         private String textToSpeech = null;
         private String ssml = null;
 
+        /**
+         * Set the final plain text to be spoken, overwriting any previously specified text or SSML.
+         *
+         * @param textToSpeech the final text to speak 
+         * @return a builder with the final text to speak set
+         */
         public TellResponseBuilder withTextToSpeech(final String textToSpeech) {
             setTextToSpeech(textToSpeech);
             setSsml(null);
             return this;
         }
 
+        /**
+         * Set the final Speech Synthesis Markup Language (SSML) to be spoken,
+         * overwriting any previously specified SSML or text to speech.
+         * 
+         * @param ssml the final SSML to speak
+         * @return a builder with the final SSML set
+         */
         public TellResponseBuilder withSsml(final String ssml) {
             setSsml(ssml);
             setTextToSpeech(null);
             return this;
         }
 
+        public TellResponseBuilder withConversationToken(final String conversationToken) {
+            setConversationToken(conversationToken);
+            return this;
+        }
+
         protected ConversationResponse createResponse() {
+            final SpeechResponse speechResponse = new SpeechResponse();
+            speechResponse.setSsml(getSsml());
+            speechResponse.setTextToSpeech(getTextToSpeech());
             final ConversationResponse retval = new ConversationResponse();
+            retval.setFinalResponse(speechResponse);
             retval.setExpectUserResponse(false);
             return retval;
         }
@@ -196,11 +255,18 @@ public class ConversationResponse {
 
     }
 
+    /**
+     * {@link Builder} that generates a valid, non-terminal, {@link ConversationResponse}.
+     *
+     * <p>Copyright &copy; 2017 Carlos Macasaet.</p>
+     *
+     * @author Carlos Macasaet
+     */
     public static class AskResponseBuilder extends Builder {
 
         private final List<SpeechResponse> initialPrompts = new LinkedList<>();
         private final List<SpeechResponse> noInputPrompts = new LinkedList<>();
-        private final List<String> expectedIntentIds = new LinkedList<>();
+        private final List<ExpectedIntent> possibleIntents = new LinkedList<>();
 
         public AskResponseBuilder withPrompt(final SpeechResponse prompt) {
             return withInitialPrompt(prompt).withNoInputPrompt(prompt);
@@ -248,22 +314,51 @@ public class ConversationResponse {
             return withNoInputPrompt(noInputPrompt);
         }
 
+        /**
+         * Add a possible followup intent.
+         *
+         * @param possibleIntent a user intent that logically follows from the current intent.
+         * @return a builder with the additional intent specified.
+         */
+        public AskResponseBuilder withExpectedIntent(final ExpectedIntent possibleIntent) {
+            getPossibleIntents().add(possibleIntent);
+            return this;
+        }
+
+        /**
+         * Add a possible followup intent ID that requires no additional permissions.
+         *
+         * @param expectedIntentId a user intent that logically follows from the current intent.
+         * @return a builder with the additional intent specified
+         */
         public AskResponseBuilder withExpectedIntentId(final String expectedIntentId) {
-            getExpectedIntentIds().add(expectedIntentId);
+            return withExpectedIntent(new ExpectedIntent(expectedIntentId));
+        }
+
+        /**
+         * Add a possible followup intent that requires special permissions.
+         *
+         * @param expectedIntentId a user intent that logically follows from the current intent.
+         * @param optContext explanation of why additional permissions are needed.
+         * @param permissions additional permissions that are needed to perform the subsequent action
+         * @return a builder with the additional intent specified
+         */
+        public AskResponseBuilder withExpectedIntent(final String expectedIntentId, final String optContext, final String... permissions) {
+            return withExpectedIntent(new ExpectedIntent(expectedIntentId, optContext, permissions));
+        }
+
+        public AskResponseBuilder withConversationToken(final String conversationToken) {
+            setConversationToken(conversationToken);
             return this;
         }
 
         protected ConversationResponse createResponse() {
             final InputPrompt inputPrompt =
                     new InputPrompt(unmodifiableList(getInitialPrompts()), unmodifiableList(getNoInputPrompts()));
-            final List<ExpectedIntent> possibleIntents = new ArrayList<>(getExpectedIntentIds().size());
-            for (final String expectedIntentId : getExpectedIntentIds()) {
-                possibleIntents.add(new ExpectedIntent(expectedIntentId));
-            }
 
             final ConversationResponse retval = new ConversationResponse();
             retval.setExpectUserResponse(true);
-            retval.setExpectedInput(new ExpectedInput(inputPrompt, unmodifiableList(possibleIntents)));
+            retval.setExpectedInput(new ExpectedInput(inputPrompt, unmodifiableList(getPossibleIntents())));
             return retval;
         }
 
@@ -275,16 +370,26 @@ public class ConversationResponse {
             return noInputPrompts;
         }
 
-        protected List<String> getExpectedIntentIds() {
-            return expectedIntentIds;
+        protected List<ExpectedIntent> getPossibleIntents() {
+            return possibleIntents;
         }
 
     }
 
+    /**
+     * Convenience method to guide the developer through the construction of a valid terminal response.
+     *
+     * @return builder for a terminal response.
+     */
     public static TellResponseBuilder tell() {
         return new TellResponseBuilder();
     }
 
+    /**
+     * Convenience method to guide the developer through the construction of a non-terminal response.
+     *
+     * @return builder for a non-terminal response.
+     */
     public static AskResponseBuilder ask() {
         return new AskResponseBuilder();
     }
