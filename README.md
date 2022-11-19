@@ -2,7 +2,7 @@
 
 Java POJOs / DTOs / domain objects  for the Actions on Google Conversation API: https://developers.google.com/actions/reference/conversation
 
-[![Build Status](https://travis-ci.org/l0s/google-actions-conversation-api.svg?branch=master)](https://travis-ci.org/l0s/google-actions-conversation-api)
+[![Build Status](https://github.com/l0s/google-actions-conversation-api/actions/workflows/ci.yml/badge.svg)](https://github.com/l0s/google-actions-conversation-api/actions/workflows/ci.yml)
 [![Javadocs](http://javadoc.io/badge/com.macasaet.google.conversation/google-actions-conversation-api.svg)](http://javadoc.io/doc/com.macasaet.google.conversation/google-actions-conversation-api)
 [![Known Vulnerabilities](https://snyk.io/test/github/l0s/google-actions-conversation-api/badge.svg?targetFile=pom.xml)](https://snyk.io/test/github/l0s/google-actions-conversation-api?targetFile=pom.xml)
 
